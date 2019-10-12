@@ -40,6 +40,8 @@ export default class ProgressBar extends React.Component {
       width = 2,
       tickSize = 0,
       total = null,
+      before = null,
+      after = null
     } = this.props;
 
     const {
@@ -49,7 +51,7 @@ export default class ProgressBar extends React.Component {
 
     const [charLeft, charRight] = wrapper;
 
-    const wrap = bar => (`${charLeft}${bar}${charRight}`);
+    const wrap = bar => <>{before}{`${charLeft}${bar}${charRight}`}{after}</>;
 
     if ((tickSize === null || tickSize === 0)) {
        const widthRest = Math.max(0, width - wrapper.join("").length);

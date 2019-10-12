@@ -1,9 +1,9 @@
-import inkly, { e, Box, Text } from '../lib/inkly'
-import ProgressBar from '../lib/components/ProgressBar'
-import delay from 'delay'
+import inkly, { e, Box, Text } from "../lib/inkly"
+import ProgressBar from "../lib/components/ProgressBar"
+import delay from "delay"
 
 const { release, setState } = inkly((props, { i }) => {
-  return e(ProgressBar, { ...props, charIncomplete: ' ' });
+  return e(ProgressBar, { before: 'prefix ', ...props, charIncomplete: " " });
 }, { width: 30, total: 30 }, { experimental: true });
 
 let count = 0;

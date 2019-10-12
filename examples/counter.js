@@ -1,4 +1,4 @@
-import inkly, { e } from '../lib/inkly'
+import inkly, { e } from "../lib/inkly"
 
 const { release, setState } = inkly((props) => {
   return e(`count: ${props.count}`);

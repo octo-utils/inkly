@@ -11,7 +11,7 @@ export const e = function(component, props, children) {
   }
   if (Array.isArray(component)) {
     return createElement(React.Fragment, {}, [
-      ...component
+      ...component.map((node, index) => <React.Fragment key={index}>{node}</React.Fragment>)
     ]);
   }
   return createElement(component, props, children);
