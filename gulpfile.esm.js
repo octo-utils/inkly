@@ -10,14 +10,14 @@ const babelrc = {
 }
 
 gulp.task('build:lib', _ => {
-  return gulp.src('./src/**/*.js', { base: path.join(__dirname, './src') })
+  return gulp.src('./es/**/*.js', { base: path.join(__dirname, './es') })
     .pipe(babel(babelrc))
     .pipe(gulp.dest('./lib'));
 })
 
 gulp.task("watch:build:lib", gulp.series("build:lib", _ => {
   return gulp.watch(
-    ["./src/**/*.js"],
+    ["./es/**/*.js"],
     gulp.series("build:lib")
   );
 }))

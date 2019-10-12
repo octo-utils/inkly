@@ -1,19 +1,29 @@
 {
   "name": "@octo-utils/inkly",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/inkly.js",
+  "module": "es/inkly.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "gulp": "gulp"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "tommyZZM",
+  "license": "MulanPSL",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com"
+  },
   "dependencies": {
     "esm": "^3.2.25",
     "ink": "^2.5.0",
     "react": "^16.10.2"
   },
+  "files": [
+    "lib/**/*.js",
+    "es/**/*.js",
+    "test/**/*"
+  ],
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/plugin-transform-modules-commonjs": "^7.6.0",

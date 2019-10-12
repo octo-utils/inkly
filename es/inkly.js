@@ -1,18 +1,23 @@
-import React, { createElement } from 'react';
-import { render as renderInk, Text } from 'ink';
+import React, { createElement } from "react";
+import { render as renderInk, Text } from "ink";
 
-export {  Box, Color, Static, Text, StdinContext, StdoutContext } from 'ink';
+export { Box, Color, Static, Text, StdinContext, StdoutContext } from "ink";
 
-export { createElement } from 'react';
+export { createElement as createReactElement } from "react";
 
 export const e = function(component, props, children) {
-  if (typeof component === 'string') {
+  if (typeof component === "string") {
     return createElement(Text, props, component);
+  }
+  if (Array.isArray(component)) {
+    return createElement(React.Fragment, {}, [
+      ...component
+    ]);
   }
   return createElement(component, props, children);
 };
 
-export const Component = React.Component;
+export const ReactComponent = React.Component;
 
 /**
  * inkly
@@ -23,7 +28,7 @@ export const Component = React.Component;
  */
 export default function(render = () => null, initialState = null, options = {}) {
 
-  class InkFragment extends Component {
+  class InkFragment extends ReactComponent {
     constructor(props) {
       super(props);
       this.state = { _t: Date.now(), _dt: 0, _i: 0 };
@@ -57,7 +62,7 @@ export default function(render = () => null, initialState = null, options = {}) 
     if (clearContent) {
       if (React.isValidElement(clearContent)) {
         rerender(clearContent);
-      } else if (typeof clearContent === 'string') {
+      } else if (typeof clearContent === "string") {
         rerender(<Text>{clearContent}</Text>)
       }
     }
