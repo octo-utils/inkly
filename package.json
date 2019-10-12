@@ -1,6 +1,6 @@
 {
   "name": "@octo-utils/inkly",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.1",
   "description": "",
   "main": "lib/inkly.js",
   "module": "es/inkly.js",
