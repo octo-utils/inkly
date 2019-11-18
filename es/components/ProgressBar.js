@@ -14,19 +14,36 @@ const TICK_STEP_TOTAL = 20;
 export default class ProgressBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { tickStep: 0, tickDirectionInfinte: true }
+    this.state = { tickStep: 0, tickDirectionInfinte: true, tickInterval: null }
   }
   componentDidMount() {
-    this.setState({ tickStep: 0, tickDirectionInfinte: true })
+    const { intervalInfinte = 200 } = this.props;
+    this.setState({ 
+      tickStep: 0, 
+      tickDirectionInfinte: true,
+      tickInterval: setInterval(this.tickFrameInterval, intervalInfinte),
+    });
   }
-  static getDerivedStateFromProps(props, state) {
-    const nextTickStep = state.tickStep + 1;
-    // console.log(nextTickStep, TICK_STEP_TOTAL, '\n');
-    return {
-      tickStep: nextTickStep,
-      ...(nextTickStep % TICK_STEP_TOTAL === 0) && {
-        tickDirectionInfinte: !state.tickDirectionInfinte
-      }
+  componentWillUnmount() {
+    clearInterval(this.state.tickInterval);
+  }
+  tickFrameInterval = () => {
+    const {
+      tickSize = 0,
+      total = null,
+    } = this.props;
+    const tickSizeByTotal = (tickSize / total);
+    const isTotalUnCountable = Number.isNaN(tickSizeByTotal) || !Number.isFinite(tickSizeByTotal);
+    if (isTotalUnCountable) {
+      const nextTickStep = this.state.tickStep + 1;
+      this.setState({
+        tickStep: nextTickStep,
+        ...(nextTickStep % TICK_STEP_TOTAL === 0) && {
+          tickDirectionInfinte: !this.state.tickDirectionInfinte
+        }
+      });
+    } else {
+      this.setState({ tickStep: 0, tickDirectionInfinte: true });
     }
   }
   render() {

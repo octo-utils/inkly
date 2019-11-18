@@ -1,19 +1,29 @@
 import React, { createElement } from "react";
-import { render as renderInk, Text } from "ink";
+import { render as renderInk, Text, Box } from "ink";
+import delay from "delay";
 
 export { Box, Color, Static, Text, StdinContext, StdoutContext } from "ink";
 
 export { createElement as createReactElement } from "react";
 
-export const e = function(component, props, children) {
+export const e = function(component, props = null, children = []) {
+  // string
   if (typeof component === "string") {
     return createElement(Text, props, component);
   }
-  if (Array.isArray(component)) {
-    return createElement(React.Fragment, {}, [
+  // array
+  if (Array.isArray(component) && props === null) {
+    return <Box>{[
       ...component.map((node, index) => <React.Fragment key={index}>{node}</React.Fragment>)
-    ]);
+    ]}</Box>;
   }
+  // (props, array)
+  if (typeof component === 'object' && Array.isArray(props)) {
+    return <Box {...component}>{[
+      ...props.map((node, index) => <React.Fragment key={index}>{node}</React.Fragment>)
+    ]}</Box>;
+  }
+  // (component, props, array)
   return createElement(component, props, children);
 };
 
@@ -58,7 +68,13 @@ export default function(render = () => null, initialState = null, options = {}) 
 
   const { rerender, unmount, waitUntilExit } = renderInk(<InkFragment {...state}/>, optionsRenderInk);
 
+  let isReleased = false;
+
   const release = async (clearContent = null) => {
+    if (isReleased) {
+      return false;
+    }
+    isReleased = true;
     if (clearContent) {
       if (React.isValidElement(clearContent)) {
         rerender(clearContent);
@@ -67,12 +83,16 @@ export default function(render = () => null, initialState = null, options = {}) 
       }
     }
     unmount();
-    await waitUntilExit();
+    return true;
   }
 
   const setState = (nextState) => {
+    if (isReleased) {
+      return false;
+    }
     state = { ...state, ...nextState };
     rerender(<InkFragment {...state}/>);
+    return true;
   }
 
   return { release, setState };

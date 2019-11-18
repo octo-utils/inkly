@@ -5,7 +5,9 @@ import babel from 'gulp-babel'
 const babelrc = {
   plugins: [
     "@babel/plugin-transform-modules-commonjs",
-    "@babel/plugin-transform-react-jsx"
+    "@babel/plugin-transform-react-jsx",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-optional-chaining"
   ]
 }
 

@@ -46,7 +46,7 @@ wrapper of `React.createElement`, but with a little bit differences;
 
 if you pass string to the first parameter, this function will simply returns a `Text` node.
 
-if you pass array to the first parameter, this function will simply returns a `React.Fragment` node. 
+if you pass array to the first parameter, this function will simply returns a `Box` node with default props. 
 
 these features may help you write less code.
 
